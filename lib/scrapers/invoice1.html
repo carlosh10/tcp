@@ -1,0 +1,247 @@
+
+<link rel="stylesheet" type="text/css" href="http://extranet.tcp.com.br/extranet/agendamento/javascript/themes/metro-blue/easyui.css">
+<link rel="stylesheet" type="text/css" href="http://extranet.tcp.com.br/extranet/agendamento/javascript/themes/icon.css">
+<script type="text/javascript" src="http://extranet.tcp.com.br/extranet/agendamento/javascript/jquery-1.8.0.min.js"></script>
+<script type="text/javascript" src="http://extranet.tcp.com.br/extranet/agendamento/javascript/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="http://extranet.tcp.com.br/extranet/agendamento/javascript/datagrid-detailview.js"></script>
+<script type="text/javascript" src="http://extranet.tcp.com.br/extranet/agendamento/javascript/locale/easyui-lang-pt_BR.js"></script>
+
+<!DOCTYPE html>
+<meta http-equiv="X-UA-Compatible" content="IE=8,chrome=1">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>INVOICE TCP</title>
+</head>
+<body>
+<table width="940" border="0" cellspacing="0" cellpadding="2">
+  <tr>
+     <th width="150"cope="col"><img src="http://extranet.tcp.com.br/extranet/new/images/tcp-logo.png" align="left"></th>
+    <th class="medx" scope="col">INVOICE N° 13231898 F <br />
+        </th>
+     <th width="100" class="medx" scope="col"><img src='http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=L|0&chl=http%3A%2F%2Fextranet.tcp.com.br%2Fextranet%2Fagendamento%2Fapp%2Fhermes%2Finvoice.php%3FFATURA%3DMTMyMzE4OTg' width='100' border='0'/></th>
+  </tr>
+ </table>
+<div id="p" class="easyui-panel" title="DADOS GERAIS" maximizable="false" closable="false" split="true" border="true" collapsible="true"  style="width:940px;padding:1px;"> 
+         <div class="easyui-layout"  style="width:935px;height:150px;"  collapsible="false"> 
+            <div title="EMISSOR"  region="west" maximizable="false" closable="false" split="false" border="true" collapsible="false" style="width:470px; overflow:hidden">
+             <table width="99%"  border="1" bordercolor="#CCCCCC"  cellspacing="0" cellpadding="0">
+                <tr>
+                    <td width="20%" class='panel-header'><font size='2' color='#000000'>NOME</font></td>
+                    <td width="80%"><font size='2' color='#000000'>TCP - TERMINAL DE CONTEINERES DE PARANAGUA S/A</font></td>
+                </tr>
+                <tr>
+                    <td width="20%"class='panel-header'><font size='2' color='#000000'>CNPJ</font></td>
+                    <td width="80%"><font size='2' color='#000000'>12.919.786/0001-24</font></td>
+                </tr>
+                 <tr>
+                    <td width="20%" class='panel-header'><font size='2' color='#000000'>ENDERECO</font></td>
+                    <td width="80%"><font size='2' color='#000000'>AV. PORTUÁRIA ,S/Nº - DOM PEDRO II CEP: 83221-570</font></td>
+                </tr>
+                 <tr>
+                    <td width="20%" class='panel-header'><font size='2' color='#000000'>CIDADE</font></td>
+                    <td width="80%"><font size='2' color='#000000'>PARANAGUÁ-PR</font></td>
+                </tr>
+           </table>         
+            </div>  
+        
+         <div title="CLIENTE"  region="center" maximizable="false" closable="false" split="false" border="true" collapsible="false" style="width:470px;overflow:hidden">
+             
+                 <table width="99%"  border="1" bordercolor="#CCCCCC"  cellspacing="0" cellpadding="0">
+                <tr>
+                    <td width="20%" class='panel-header'><font size='2' color='#000000'>NOME</font></td>
+                    <td width="80%"><font size='2' color='#000000'>SNR ROLAMENTOS DO BRASIL LTDA</font></td>
+                </tr>
+                <tr>
+                    <td width="20%"class='panel-header'><font size='2' color='#000000'>CNPJ</font></td>
+                    <td width="80%"><font size='2' color='#000000'>02995040000146</font></td>
+                </tr>
+                 <tr>
+                    <td width="20%" class='panel-header'><font size='2' color='#000000'>ENDERECO</font></td>
+                    <td width="80%"><font size='2' color='#000000'>AV DAS INDUSTRIAS. 380 FAZ. IGUACU</font></td>
+                </tr>
+                 <tr>
+                    <td width="20%" class='panel-header'><font size='2' color='#000000'>CEP/UF</font></td>
+                    <td width="80%"><font size='2' color='#000000'>83820000 PR </font></td>
+                </tr>
+           </table> 
+             
+             </div>  
+               
+       </div>
+
+</div> 
+
+<div id="p" class="easyui-panel" title="DADOS DA FATURA" maximizable="false" closable="false" split="true" border="true" collapsible="true"  style="width:940px;padding:1px;"> 
+<table width="100%"  class="easyui-datagrid" striped="true" border="true"  cellspacing="0" cellpadding="1">
+ <thead>
+<tr>
+    
+     <th  field="name2" scope="row">FATURA</th>
+     <th  field="name3" scope="row">NOTA FISCAL</th>
+      <th  field="name4" scope="row">BOLETO</th>
+     <th  field="name5">DATA EMISSAO</th>
+     <th  field="name6">DATA VENCIMENTO</th>
+     <th  field="name7">DATA PAGAMENTO</th>
+     <th  field="name10">STATUS PGTO</th>
+ 
+    </tr>
+     </thead>                             
+    <tbody> 
+    <td>13231898 </td>
+    <td><b><a title="Visualizar NFSE" href="http://visualizar.ginfes.com.br/report/consultarNota?__report=nfs_ver4&cdVerificacao=616230147" target="_blank">406223</a></b></td>
+    <td><b><a title="IMPRIMIR BOLETO" href="http://extranet.tcp.com.br/NFSE/boleto/boleto_new.php?chave=MjMyNDI0" target="_blank">406223</a></b></td>
+    <td>21/09/2015</td>
+    <td>21/09/2015</td>
+    <td>22/09/2015</td>
+    <td>PAGO</td>
+    
+    </tbody>
+    </table>
+</div>
+
+<div id="p" class="easyui-panel" title="SERVICOS PRESTADOS" maximizable="false" closable="false" split="true" border="true" collapsible="true"  style="width:940px;padding:1px;"> 
+<table width="100%"  class="easyui-datagrid" striped="true" border="true"  cellspacing="0" cellpadding="1">
+ <thead>
+<tr>
+    
+     <th  field="name2" width="930px" scope="row">SERVICOS PRESTADOS</th>
+
+ 
+    </tr>
+     </thead>                             
+    <tbody> 
+    <td>FATURA:13231898 SERIE: F NAVIO:          VIAGEM:          OBS:                           <br>
+                              CADASTRO CONHECIMENTO DE TRANS       300090   <br>LCL. CARREGAMENTO                    340020   <br>LCL. DESMEMBRAMENTO BL HOUSE         340030   <br>LCL. PRESENcA DE CARGA               340040   <br>LCL. PESAGEM LOTE                    340110   <br>NUMERO DI/DTA: 15/1643960-2 <br>ORDEM DE SERVICO: 30225715 <br> NAVIO:  VIAGEM:  <br> </td>
+
+    
+    </tbody>
+    </table>
+</div>
+<div id="p" class="easyui-panel excelicon" title="DETALHAMENTO" maximizable="false" closable="false" split="true" border="true" collapsible="true"  style="width:940px;padding:1px;">
+    
+    
+    <a href="#" id="btnExport">
+        <img src="http://extranet.tcp.com.br/extranet/agendamento/img/excel.png" width="20" border="0" title="Exportar Detalhamento em XLS"> 
+        <span>Exportar</span>
+    </a>
+    
+    <form action="gerar_xls.php" method="post" target="_blank" id="FormularioExportacao">
+        <input type="hidden" id="dados_a_enviar" name="dados_a_enviar" />
+    </form>
+    
+    <style type="text/css">
+        body{ font-family: Arial, Helvetica, sans-serif; }
+        .excelicon-conteiner{
+            position: relative;
+        }
+        #btnExport{
+            z-index: 999;
+            left: 110px;
+            top: 3px;
+            display: block;
+            clear: both;
+        }
+       
+        
+        #btnExport img{
+            float: left;
+        }
+        
+        #btnExport span{
+            padding: 5px;
+            float: left;
+        }
+        
+        #FormularioExportacao{
+            display: none;
+        }
+    </style>
+    
+    <script type='text/javascript' language='javascript'>
+        $("#btnExport").click(function(event) {
+            $("#dados_a_enviar").val( $("<div>").append( $("#export_xls").eq(0).clone()).html());
+            $("#FormularioExportacao").submit();
+            return false;
+        });
+        
+        $(".excelicon").parent().addClass('exceliconconteiner');
+        
+    </script>
+    
+    <div style="clear: both;"></div>
+<table id='export_xls' width='100%'  class='easyui-datagrid' striped='true' border='true'>
+                        <thead>
+                            <tr><th field='DESCRICAO'  scope='row'>DESCRICAO</th><th field='PESO'  scope='row'>PESO</th><th field='VALOR'  scope='row'>VALOR</th><th field='CE_MASTER'  scope='row'>CE MASTER</th><th field='CE_HOUSE'  scope='row'>CE HOUSE</th><th field='DI'  scope='row'>DI</th> </tr>
+                         </thead>                             
+                        <tbody> <tr><td> MORU 0112531 CADASTRO CONHECIMENTO DE TRANS      </td><td>71,00</td><td>56,00</td><td>161505185396150                    </td><td>161505190029330                    </td><td>15/1643960-2                       </td></tr><tr><td> MORU 0112531 LCL. CARREGAMENTO                   </td><td>71,00</td><td>520,00</td><td>161505185396150                    </td><td>161505190029330                    </td><td>15/1643960-2                       </td></tr><tr><td> MORU 0112531 LCL. DESMEMBRAMENTO BL HOUSE        </td><td>71,00</td><td>190,00</td><td>161505185396150                    </td><td>161505190029330                    </td><td>15/1643960-2                       </td></tr><tr><td> MORU 0112531 LCL. PRESEN�A DE CARGA              </td><td>71,00</td><td>95,00</td><td>161505185396150                    </td><td>161505190029330                    </td><td>15/1643960-2                       </td></tr><tr><td> MORU 0112531 LCL. PESAGEM LOTE                   </td><td>71,00</td><td>85,00</td><td>161505185396150                    </td><td>161505190029330                    </td><td>15/1643960-2                       </td></tr></tbody></table>
+
+</div>
+
+
+
+<div id="p" class="easyui-panel" title="ORDEM DE SERVICO" maximizable="false" closable="false" split="true" border="true" collapsible="true"  style="width:940px;padding:5px;"> 
+
+
+<table width="100%"  class="easyui-datagrid" striped="true" border="true"  cellspacing="0" cellpadding="1">
+ <thead>
+        <tr>
+         <th  field="name1" scope="row">DATA</th>
+         <th  field="name2" scope="row">OS</th>
+         <th  field="name3" scope="row">FATURA</th>
+         <th  field="name4" scope="row">CE</th>
+         <th  field="name5">VALOR CIF</th>
+         <th  field="name6">DI/DTA</th>
+         <th  field="name7">TIPO</th>
+     
+        </tr>
+     </thead>                             
+        <tbody> 
+                <tr>
+             <td>18/09/2015 17:02:51</td>
+             <td><a title="Visualizar Ordem de Servico" href="http://extranet.tcp.com.br/extranet/agendamento/app/os.php?TOKEN=5f3a14ea884c94adde5dfe3e06b2e09c63492a1ab71e394b61b41340f32bf6623b471cc7d7e7dd245f42c0c886a23b7ab7eb9723c570718f0b36a56521d310a2" target="_blank">30225715</a></td>
+             <td>13231898</td>
+             <td>161505190029330</td>
+             <td>6664.09</td>
+             <td>15/1643960-2</td>
+             <td>DI</td>
+           </tr>  
+                        
+    </tbody>
+    </table>
+</div>
+ 
+<div id="p" class="easyui-panel" title="EMAILS ENVIADOS" maximizable="false" closable="false" split="true" border="true" collapsible="true"  style="width:940px;padding:5px;"> 
+
+
+<table width="100%"  class="easyui-datagrid" striped="true" border="true"  cellspacing="0" cellpadding="1">
+ <thead>
+        <tr>
+         <th  field="name1" scope="row">DATA ENVIO</th>
+         <th  field="name2" scope="row">DESTINATARIOS</th>
+         
+     
+        </tr>
+     </thead>                             
+        <tbody> 
+                <tr>
+             <td>21/09/2015 15:18:04</td>
+             <td>PALBERTOPNG@GO2UTI.COM.BR PALBERTO-PNG@GO2UTI.COM.BR wsantos-png@go2uti.com.br palberto-png@go2uti.com.br gandrade@go2uti.com </td>
+            
+           </tr>  
+                        
+    </tbody>
+    </table>
+</div>
+
+<div id="p" class="easyui-panel" title="VALORES" maximizable="false" closable="false" split="true" border="true" collapsible="true"  style="width:940px;padding:5px;"> 
+<div align="right"><h2> VALOR R$ 946,00</h2></div>
+</div>
+ 
+ 
+ 
+ 
+ 
+ 
+    
+    </body>
+</html>

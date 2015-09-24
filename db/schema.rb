@@ -11,37 +11,43 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150923195848) do
-
-  create_table "appearances", force: :cascade do |t|
-    t.integer  "invoice_id"
-    t.integer  "o_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  add_index "appearances", ["invoice_id"], name: "index_appearances_on_invoice_id"
-  add_index "appearances", ["o_id"], name: "index_appearances_on_o_id"
+ActiveRecord::Schema.define(version: 20150924201728) do
 
   create_table "clients", force: :cascade do |t|
     t.string   "client_code"
     t.string   "client_name"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.string   "client_address"
+    t.string   "client_cep"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
   end
 
   create_table "invoices", force: :cascade do |t|
     t.integer  "invoice_num"
     t.string   "invoice_url"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.string   "service"
+    t.string   "emission_date"
+    t.string   "due_date"
+    t.string   "pay_date"
+    t.string   "pay_status"
+    t.string   "email"
+    t.integer  "invoice_id"
+    t.integer  "o_id"
   end
+
+  add_index "invoices", ["invoice_id"], name: "index_invoices_on_invoice_id"
+  add_index "invoices", ["o_id"], name: "index_invoices_on_o_id"
 
   create_table "os", force: :cascade do |t|
     t.integer  "os_num"
     t.string   "os_url"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer  "client_id"
   end
+
+  add_index "os", ["client_id"], name: "index_os_on_client_id"
 
 end
