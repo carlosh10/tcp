@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  description: MyString
+  weight: 1
+  value: 1
+  cemaster: MyString
+  cehouse: MyString
+  di: MyString
+  invoice_id: 
+
+two:
+  description: MyString
+  weight: 1
+  value: 1
+  cemaster: MyString
+  cehouse: MyString
+  di: MyString
+  invoice_id: 
