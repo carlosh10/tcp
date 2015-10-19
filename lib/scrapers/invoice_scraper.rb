@@ -49,6 +49,8 @@ c = Client.find_or_create_by(client_code: fonts[11].text)
   }
   c.save
 
+i.update_attribute(:client_id, c.id)
+
 
 
 #select all of the ordems de servicio
@@ -68,7 +70,7 @@ page.css("#p")[4].css("tr")[1..-1].each do |ordem_row|
     ordem.save
   end
 
-
+i.update_attribute(:order_id, ordem.id)
 
 end
 
