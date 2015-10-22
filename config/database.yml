@@ -20,10 +20,10 @@ test:
   <<: *default
   database: db/test.sqlite3
 
-development:
+production:
   adapter: postgresql
   encoding: unicode
-  database: myapp_development
+  database: tcp
   pool: 5
   username: postgre
   password: Pinho@15
