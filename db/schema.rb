@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150924202152) do
+ActiveRecord::Schema.define(version: 20151019135719) do
 
   create_table "clients", force: :cascade do |t|
     t.string   "client_code"
@@ -49,8 +49,10 @@ ActiveRecord::Schema.define(version: 20150924202152) do
     t.string   "email"
     t.integer  "invoice_id"
     t.integer  "o_id"
+    t.integer  "client_id"
   end
 
+  add_index "invoices", ["client_id"], name: "index_invoices_on_client_id"
   add_index "invoices", ["invoice_id"], name: "index_invoices_on_invoice_id"
   add_index "invoices", ["o_id"], name: "index_invoices_on_o_id"
 

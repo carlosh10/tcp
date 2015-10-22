@@ -3,24 +3,44 @@ require 'nokogiri'
 require 'pry'
 require 'base64'
 require  'httparty'
-
+require 'iconv'
 
 #Target scrape invoice num
-base_url = "http://extranet.tcp.com.br/extranet/agendamento/app/hermes/invoice.php?FATURA="
+base_url = "/data/crawler/invoices/"
 
-invoice_num = 13231898
+invoice_num = 13000000
 
-while invoice_num > 0 do
+invoice_max = 13239050
+
+while invoice_max > invoice_num do
+
+begin
 
 invoice_num64 = Base64.encode64(invoice_num.to_s)
 
-target_url = "#{base_url}#{invoice_num64}"
+target_url = "#{base_url}#{invoice_max}.html"
 
-response = HTTParty.get(target_url)
+#response = HTTParty.get(target_url)
 
-page = Nokogiri::HTML(response.body)
+puts invoice_max.to_s
 
+unless File.exist?(target_url)
+	invoice_max -= 1
+	next
+end
 
+response = File.open(target_url, 'r:iso-8859-1:utf-8')
+
+#
+
+puts 'ok'
+
+page = Nokogiri::HTML(response)
+
+unless page.css("#p").count >= 2
+	invoice_max -= 1
+	next
+end
 
 i = Invoice.find_or_create_by(invoice_num: page.css("th.medx").text().gsub(/\D+/, ''))
   i.attributes = {
@@ -38,7 +58,6 @@ i = Invoice.find_or_create_by(invoice_num: page.css("th.medx").text().gsub(/\D+/
   i.save
 
 
-
 fonts = page.css('tr > td > font')
 c = Client.find_or_create_by(client_code: fonts[11].text)
   c.attributes = {
@@ -52,25 +71,36 @@ c = Client.find_or_create_by(client_code: fonts[11].text)
 i.update_attribute(:client_id, c.id)
 
 
+unless page.css("#p").count >= 4
+	invoice_max -= 1
+	next
+end
 
 #select all of the ordems de servicio
 page.css("#p")[4].css("tr")[1..-1].each do |ordem_row|
   ordem_line = ordem_row.children
 
-  ordem = O.find_by(os_num: ordem_line[3].text)
+  if ordem_line.count < 3 || ordem_line[3].css("a") == [] || ordem_line[3].css("a").count == 0  
+	invoice_max -= 1
+	next
+  end
+
+ ordem = O.find_by(os_num: ordem_line[3].text)
 
   if ordem == nil
+   
+	
     ordem = O.new({
       os_num: ordem_line[3].text,
       os_url: ordem_line[3].css("a").attr("href").value
     })
 
-    binding.pry
+   
     
     ordem.save
   end
 
-i.update_attribute(:order_id, ordem.id)
+i.update_attribute(:o_id, ordem.id)
 
 end
 
@@ -81,7 +111,8 @@ end
 # for each expense line
 # notes: uses [1..-1] range to throw out header row.
 page.css("#p")[3].css("tr")[1..-1].each do |expense_row|
-    expense_line = expense_row.children
+
+   expense_line = expense_row.children
     e = Expense.new({
         description: expense_line[0].text.strip,
         weight: expense_line[1].text.strip,
@@ -89,13 +120,17 @@ page.css("#p")[3].css("tr")[1..-1].each do |expense_row|
         cemaster: expense_line[3].text.strip,
         cehouse: expense_line[4].text.strip,
         di: expense_line[5].text.strip,
-        invoice_id: i.invoice_id
+        invoice_id: i.id
     })
 
     e.save
 end
 
-invoice_num-=1
+rescue
+	puts 'FAIL'
+end
+
+invoice_max-=1
 
 end
 
