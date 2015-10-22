@@ -25,6 +25,7 @@ production:
   encoding: unicode
   database: tcp
   pool: 5
-  username: postgre
+  username: postgres
   password: Pinho@15
+  host: 104.197.81.134
 
