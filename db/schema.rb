@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151019135719) do
+ActiveRecord::Schema.define(version: 20151023173201) do
 
   create_table "clients", force: :cascade do |t|
     t.string   "client_code"
@@ -36,6 +36,17 @@ ActiveRecord::Schema.define(version: 20151019135719) do
 
   add_index "expenses", ["invoice_id"], name: "index_expenses_on_invoice_id"
 
+  create_table "historics", force: :cascade do |t|
+    t.datetime "moment"
+    t.string   "user"
+    t.string   "historic"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer  "o_id"
+  end
+
+  add_index "historics", ["o_id"], name: "index_historics_on_o_id"
+
   create_table "invoices", force: :cascade do |t|
     t.integer  "invoice_num"
     t.string   "invoice_url"
@@ -50,6 +61,7 @@ ActiveRecord::Schema.define(version: 20151019135719) do
     t.integer  "invoice_id"
     t.integer  "o_id"
     t.integer  "client_id"
+    t.float    "value"
   end
 
   add_index "invoices", ["client_id"], name: "index_invoices_on_client_id"
@@ -59,11 +71,30 @@ ActiveRecord::Schema.define(version: 20151019135719) do
   create_table "os", force: :cascade do |t|
     t.integer  "os_num"
     t.string   "os_url"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
     t.integer  "client_id"
+    t.string   "ce"
+    t.string   "di"
+    t.datetime "retirada"
+    t.float    "cif_value"
+    t.float    "total_value"
+    t.datetime "created"
+    t.integer  "number"
+    t.integer  "turn"
   end
 
   add_index "os", ["client_id"], name: "index_os_on_client_id"
+
+  create_table "services", force: :cascade do |t|
+    t.integer  "quantity"
+    t.string   "service"
+    t.float    "value"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer  "o_id"
+  end
+
+  add_index "services", ["o_id"], name: "index_services_on_o_id"
 
 end

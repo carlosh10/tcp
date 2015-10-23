@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  moment: 2015-10-23 15:23:33
+  user: MyString
+  historic: MyString
+
+two:
+  moment: 2015-10-23 15:23:33
+  user: MyString
+  historic: MyString
