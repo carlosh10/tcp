@@ -20,6 +20,8 @@ invoice_max = 13239050
 
 Parallel.each((invoice_num..invoice_max).to_a, in_threads: 10) do |num|
 
+puts num
+
 begin
 
   target_url = "#{base_url}#{num}.html"
@@ -78,7 +80,7 @@ begin
 
 
   unless page.css("#p").count >= 4
-    #  next
+    next
   end
 
   #select all of the ordems de servicio
@@ -208,6 +210,6 @@ rescue => e
   puts "caught exception #{e}! ohnoes!"
 end
 
-# end
+end
 
 puts 'end proccess'
