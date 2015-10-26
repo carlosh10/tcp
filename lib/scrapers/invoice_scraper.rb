@@ -18,11 +18,11 @@ invoice_num = 13000000
 invoice_max = 13239050
 
 
-Parallel.each((invoice_num..invoice_max).to_a, in_threads: 4) do |num|
+Parallel.each((invoice_num..invoice_max).to_a, in_threads: 1) do |num|
 
   puts num
 
-  begin
+  #begin
 
     target_url = "#{base_url}#{num}.html"
 
@@ -216,9 +216,9 @@ Parallel.each((invoice_num..invoice_max).to_a, in_threads: 4) do |num|
 
     end
 
-  rescue => e
-    puts "caught exception #{e.backtrace}! ohnoes!"
-  end
+  #rescue => e
+  #  puts "caught exception #{e.backtrace}! ohnoes!"
+  #end
 
 end
 
