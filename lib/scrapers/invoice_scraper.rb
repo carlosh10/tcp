@@ -205,7 +205,7 @@ Parallel.each((invoice_num..invoice_max).to_a, in_threads: 1) do |num|
                         invoice_id: i.id
       })
 
-      binding.pry
+      # binding.pry
       e.save
 
     end

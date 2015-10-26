@@ -23,7 +23,7 @@ test:
 production:
   adapter: postgresql
   encoding: unicode
-  database: tcp
+  database: tcp2
   pool: 5
   username: postgres
   password: Pinho@15
