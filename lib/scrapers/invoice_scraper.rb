@@ -105,7 +105,7 @@ Parallel.each((invoice_num..invoice_max).to_a, in_threads: 4) do |num|
                         historics: Array.new
         })
 
-        os_url = '#{ordem.os_url.split('=').last}.html'
+        os_url = "/data/crawler/os/#{ordem.os_url.split('=').last}.html"
 
         #os_url = '/home/alvaro/Downloads/ORDEM DE SERVICO TCP.html'
 
