@@ -18,7 +18,7 @@ invoice_num = 13000000
 invoice_max = 13239050
 
 
-Parallel.each((invoice_num..invoice_max).to_a, in_threads: 1) do |num|
+Parallel.each((invoice_num..invoice_max).to_a, in_threads: 4) do |num|
 
   puts num
 
@@ -26,7 +26,7 @@ Parallel.each((invoice_num..invoice_max).to_a, in_threads: 1) do |num|
 
     target_url = "#{base_url}#{num}.html"
 
-    # target_url = "/home/alvaro/Downloads/INVOICE TCP.html"
+    #target_url = "/home/alvaro/Downloads/INVOICE TCP2.html"
 
     unless File.exist?(target_url)
       next
@@ -105,9 +105,9 @@ Parallel.each((invoice_num..invoice_max).to_a, in_threads: 1) do |num|
                         historics: Array.new
         })
 
-        #os_url = '#{ordem.os_url.split('=').last}.html'
+        os_url = '#{ordem.os_url.split('=').last}.html'
 
-        os_url = '/home/alvaro/Downloads/ORDEM DE SERVICO TCP.html'
+        #os_url = '/home/alvaro/Downloads/ORDEM DE SERVICO TCP.html'
 
 
 
@@ -194,18 +194,24 @@ Parallel.each((invoice_num..invoice_max).to_a, in_threads: 1) do |num|
 
     page.xpath("/html/body/div[4]/div[2]/div[2]/div/div/div[2]/div[2]/table/tbody").css("tr")[1..-1].each do |expense_row|
 
+      get = 0
       expense_line = expense_row.children
+
+      if expense_line.count == 7
+      	get = 1
+      end
+
       e = Expense.new({
-                        description: expense_line[0].text.strip,
-                        weight: expense_line[1].text.strip,
-                        value: expense_line[2].text.strip,
-                        cemaster: expense_line[3].text.strip,
-                        cehouse: expense_line[4].text.strip,
-                        di: expense_line[5].text.strip,
+                        description: expense_line[get].text.strip,
+                        weight: expense_line[get + 1].text.strip,
+                        value: expense_line[get + 2].text.strip,
+                        cemaster: expense_line[get + 3].text.strip,
+                        cehouse: expense_line[get + 4].text.strip,
+                        di: expense_line[get + 5].text.strip,
                         invoice_id: i.id
       })
 
-      # binding.pry
+      binding.pry
       e.save
 
     end
