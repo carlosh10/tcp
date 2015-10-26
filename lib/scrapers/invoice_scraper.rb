@@ -217,7 +217,7 @@ Parallel.each((invoice_num..invoice_max).to_a, in_threads: 4) do |num|
     end
 
   rescue => e
-    puts "caught exception #{e}! ohnoes!"
+    puts "caught exception #{e.backtrace}! ohnoes!"
   end
 
 end
