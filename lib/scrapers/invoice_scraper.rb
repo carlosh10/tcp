@@ -192,7 +192,7 @@ Parallel.each((invoice_num..invoice_max).to_a, in_threads: 1) do |num|
     #//*[@id="p"]/div[2]/div/div/div[2]/div[2]/table/tbody
     #/html/body/div[4]/div[2]/div[2]/div/div/div[2]/div[2]/table/tbody
 
-    page.xpath("/html/body/div[4]/div[2]/div[2]/div/div/div[2]/div[2]/table/tbody").css("tr")[1..-1].each do |expense_row|
+    page.css("#p")[3].css("tr")[1..-1].each do |expense_row|
 
       get = 0
       expense_line = expense_row.children
