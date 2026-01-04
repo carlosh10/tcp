@@ -1,4 +1,140 @@
-<div>
-  <h1 class="font-bold text-4xl">Dashboard#index</h1>
-  <p>Find me in app/views/dashboard/index.html.erb</p>
+<div class="min-h-screen bg-gray-900 text-white p-4">
+  <div class="max-w-4xl mx-auto">
+    <!-- Header -->
+    <div class="flex justify-between items-center mb-6">
+      <h1 class="text-2xl font-bold">Country Days Tracker</h1>
+      <div class="flex gap-4">
+        <%= link_to "+ Add Visit", new_visit_path, class: "bg-orange-500 hover:bg-orange-600 px-4 py-2 rounded-lg" %>
+        <%= button_to "Logout", logout_path, method: :delete, class: "bg-gray-700 hover:bg-gray-600 px-4 py-2 rounded-lg" %>
+      </div>
+    </div>
+
+    <!-- Date Range -->
+    <div class="bg-gray-800 rounded-lg p-4 mb-4">
+      <div class="flex items-center gap-2">
+        <span class="text-orange-500">📅</span>
+        <span>Range: <%= @start_date.strftime("%d %b %Y") %> - <%= @end_date.strftime("%d %b %Y") %></span>
+      </div>
+      <div class="mt-2 text-sm text-gray-400">
+        <%= pluralize(@total_trips, 'trip') %> • <%= pluralize(@country_summary.values.sum, 'day') %> total
+      </div>
+    </div>
+
+    <!-- Country Summary -->
+    <div class="bg-gray-800 rounded-lg p-4 mb-4">
+      <h2 class="text-lg font-semibold mb-3">Countries Visited</h2>
+      <% if @country_summary.any? %>
+        <div class="space-y-2">
+          <% @country_summary.each do |country, days| %>
+            <div class="flex justify-between items-center py-2 border-b border-gray-700">
+              <div class="flex items-center gap-2">
+                <span class="text-2xl"><%= country.flag_emoji %></span>
+                <span><%= country.name %></span>
+              </div>
+              <span class="text-xl font-bold"><%= days %></span>
+            </div>
+          <% end %>
+        </div>
+      <% else %>
+        <p class="text-gray-400">No visits recorded for this period</p>
+      <% end %>
+    </div>
+
+    <!-- Schengen Status -->
+    <% if @schengen_status[:days] > 0 %>
+      <div class="bg-gray-800 rounded-lg p-4 mb-4">
+        <h2 class="text-lg font-semibold mb-3">Schengen Status (90/180 Rule)</h2>
+        <div class="space-y-2">
+          <div class="flex justify-between">
+            <span>Days used (last 180 days):</span>
+            <span class="font-bold <%= @schengen_status[:alert] ? 'text-red-500' : 'text-green-500' %>">
+              <%= @schengen_status[:days] %> / 90
+            </span>
+          </div>
+          <div class="flex justify-between">
+            <span>Days remaining:</span>
+            <span class="font-bold <%= @schengen_status[:remaining] < 10 ? 'text-red-500' : 'text-green-500' %>">
+              <%= @schengen_status[:remaining] %>
+            </span>
+          </div>
+          <% if @schengen_status[:alert] %>
+            <div class="mt-2 p-2 bg-red-900 rounded text-sm">
+              ⚠️ Warning: You are approaching the 90-day Schengen limit!
+            </div>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+
+    <!-- Calendar -->
+    <div class="bg-gray-800 rounded-lg p-4">
+      <div class="flex justify-between items-center mb-4">
+        <h2 class="text-lg font-semibold">
+          <%= @calendar_date.strftime("%B %Y") %>
+        </h2>
+        <div class="flex gap-2">
+          <%= link_to "◀", dashboard_path(month: (@calendar_date - 1.month).month, year: (@calendar_date - 1.month).year), class: "px-3 py-1 bg-gray-700 rounded hover:bg-gray-600" %>
+          <%= link_to "▶", dashboard_path(month: (@calendar_date + 1.month).month, year: (@calendar_date + 1.month).year), class: "px-3 py-1 bg-gray-700 rounded hover:bg-gray-600" %>
+        </div>
+      </div>
+
+      <!-- Calendar Grid -->
+      <div class="grid grid-cols-7 gap-2 text-center">
+        <!-- Day headers -->
+        <% %w[Sun Mon Tue Wed Thu Fri Sat].each do |day| %>
+          <div class="text-gray-400 text-sm font-semibold"><%= day %></div>
+        <% end %>
+
+        <!-- Empty cells for days before month starts -->
+        <% (@calendar_date.beginning_of_month.wday).times do %>
+          <div class="aspect-square"></div>
+        <% end %>
+
+        <!-- Calendar days -->
+        <% (1..@calendar_date.end_of_month.day).each do |day| %>
+          <div class="aspect-square bg-gray-700 rounded p-1 relative">
+            <div class="text-sm <%= Date.new(@calendar_year, @calendar_month, day) == Date.today ? 'text-blue-400 font-bold' : '' %>">
+              <%= day %>
+            </div>
+            <% if @calendar_data[day]&.any? %>
+              <div class="flex flex-wrap gap-0.5 mt-1">
+                <% @calendar_data[day].each do |country| %>
+                  <span class="text-xs" title="<%= country.name %>"><%= country.flag_emoji %></span>
+                <% end %>
+              </div>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+    <!-- Recent Visits -->
+    <div class="bg-gray-800 rounded-lg p-4 mt-4">
+      <h2 class="text-lg font-semibold mb-3">Recent Visits</h2>
+      <% recent_visits = current_user.visits.includes(:country).ordered.limit(5) %>
+      <% if recent_visits.any? %>
+        <div class="space-y-2">
+          <% recent_visits.each do |visit| %>
+            <div class="flex justify-between items-center py-2 border-b border-gray-700">
+              <div>
+                <span class="text-xl"><%= visit.country.flag_emoji %></span>
+                <span class="ml-2"><%= visit.country.name %></span>
+                <span class="ml-2 text-sm text-gray-400">
+                  <%= visit.start_date.strftime("%d %b") %> - <%= visit.end_date.strftime("%d %b %Y") %>
+                </span>
+              </div>
+              <div class="flex gap-2">
+                <span class="text-sm text-gray-400"><%= pluralize(visit.duration_days, 'day') %></span>
+                <%= link_to "Edit", edit_visit_path(visit), class: "text-blue-400 hover:underline text-sm" %>
+                <%= button_to "Delete", visit_path(visit), method: :delete, data: { turbo_confirm: "Are you sure?" }, class: "text-red-400 hover:underline text-sm" %>
+              </div>
+            </div>
+          <% end %>
+        </div>
+        <%= link_to "View All Visits →", visits_path, class: "mt-4 inline-block text-blue-400 hover:underline" %>
+      <% else %>
+        <p class="text-gray-400">No visits recorded yet</p>
+      <% end %>
+    </div>
+  </div>
 </div>
