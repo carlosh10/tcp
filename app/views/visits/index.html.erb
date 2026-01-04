@@ -1,0 +1,44 @@
+<div class="min-h-screen bg-gray-900 text-white p-4">
+  <div class="max-w-4xl mx-auto">
+    <div class="flex justify-between items-center mb-6">
+      <h1 class="text-2xl font-bold">All Visits</h1>
+      <div class="flex gap-4">
+        <%= link_to "+ Add Visit", new_visit_path, class: "bg-orange-500 hover:bg-orange-600 px-4 py-2 rounded-lg" %>
+        <%= link_to "← Dashboard", dashboard_path, class: "bg-gray-700 hover:bg-gray-600 px-4 py-2 rounded-lg" %>
+      </div>
+    </div>
+
+    <div class="bg-gray-800 rounded-lg p-4">
+      <% if @visits.any? %>
+        <div class="space-y-2">
+          <% @visits.each do |visit| %>
+            <div class="flex justify-between items-center py-3 border-b border-gray-700">
+              <div class="flex-1">
+                <div class="flex items-center gap-2">
+                  <span class="text-2xl"><%= visit.country.flag_emoji %></span>
+                  <span class="font-semibold"><%= visit.country.name %></span>
+                </div>
+                <div class="mt-1 text-sm text-gray-400">
+                  <%= visit.start_date.strftime("%d %b %Y") %> - <%= visit.end_date.strftime("%d %b %Y") %>
+                  • <%= pluralize(visit.duration_days, 'day') %>
+                  <% if visit.purpose.present? %>
+                    • <%= visit.purpose %>
+                  <% end %>
+                </div>
+                <% if visit.notes.present? %>
+                  <div class="mt-1 text-sm text-gray-500"><%= visit.notes %></div>
+                <% end %>
+              </div>
+              <div class="flex gap-2">
+                <%= link_to "Edit", edit_visit_path(visit), class: "text-blue-400 hover:underline text-sm" %>
+                <%= button_to "Delete", visit_path(visit), method: :delete, data: { turbo_confirm: "Are you sure?" }, class: "text-red-400 hover:underline text-sm" %>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      <% else %>
+        <p class="text-gray-400 text-center py-8">No visits recorded yet</p>
+      <% end %>
+    </div>
+  </div>
+</div>

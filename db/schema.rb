@@ -1,100 +1,70 @@
-# encoding: UTF-8
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
 #
-# Note that this schema.rb definition is the authoritative source for your
-# database schema. If you need to create the application database on another
-# system, you should be using db:schema:load, not running all the migrations
-# from scratch. The latter is a flawed and unsustainable approach (the more migrations
-# you'll amass, the slower it'll run and the greater likelihood for issues).
+# This file is the source Rails uses to define your schema when running `bin/rails
+# db:schema:load`. When creating a new database, `bin/rails db:schema:load` tends to
+# be faster and is potentially less error prone than running all of your
+# migrations from scratch. Old migrations may fail to apply correctly if those
+# migrations use external dependencies or application code.
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151023173201) do
-
-  create_table "clients", force: :cascade do |t|
-    t.string   "client_code"
-    t.string   "client_name"
-    t.string   "client_address"
-    t.string   "client_cep"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
-  end
-
-  create_table "expenses", force: :cascade do |t|
-    t.string   "description"
-    t.integer  "weight"
-    t.integer  "value"
-    t.string   "cemaster"
-    t.string   "cehouse"
-    t.string   "di"
-    t.integer  "invoice_id"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
-  end
-
-  add_index "expenses", ["invoice_id"], name: "index_expenses_on_invoice_id"
-
-  create_table "historics", force: :cascade do |t|
-    t.datetime "moment"
-    t.string   "user"
-    t.string   "historic"
+ActiveRecord::Schema[7.2].define(version: 2026_01_04_085844) do
+  create_table "countries", force: :cascade do |t|
+    t.string "code", null: false
+    t.string "name", null: false
+    t.string "flag_emoji"
+    t.integer "visa_limit_days"
+    t.integer "visa_period_days"
+    t.integer "tax_residency_days", default: 183
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer  "o_id"
+    t.index ["code"], name: "index_countries_on_code", unique: true
   end
 
-  add_index "historics", ["o_id"], name: "index_historics_on_o_id"
-
-  create_table "invoices", force: :cascade do |t|
-    t.integer  "invoice_num"
-    t.string   "invoice_url"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
-    t.string   "service"
-    t.string   "emission_date"
-    t.string   "due_date"
-    t.string   "pay_date"
-    t.string   "pay_status"
-    t.string   "email"
-    t.integer  "invoice_id"
-    t.integer  "o_id"
-    t.integer  "client_id"
-    t.float    "value"
-  end
-
-  add_index "invoices", ["client_id"], name: "index_invoices_on_client_id"
-  add_index "invoices", ["invoice_id"], name: "index_invoices_on_invoice_id"
-  add_index "invoices", ["o_id"], name: "index_invoices_on_o_id"
-
-  create_table "os", force: :cascade do |t|
-    t.integer  "os_num"
-    t.string   "os_url"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
-    t.integer  "client_id"
-    t.string   "ce"
-    t.string   "di"
-    t.datetime "retirada"
-    t.float    "cif_value"
-    t.float    "total_value"
-    t.datetime "created"
-    t.integer  "number"
-    t.integer  "turn"
-  end
-
-  add_index "os", ["client_id"], name: "index_os_on_client_id"
-
-  create_table "services", force: :cascade do |t|
-    t.integer  "quantity"
-    t.string   "service"
-    t.float    "value"
+  create_table "country_rules", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "country_id", null: false
+    t.integer "max_days"
+    t.integer "period_days"
+    t.boolean "alert_enabled", default: true
+    t.integer "alert_threshold"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer  "o_id"
+    t.index ["country_id"], name: "index_country_rules_on_country_id"
+    t.index ["user_id", "country_id"], name: "index_country_rules_on_user_id_and_country_id", unique: true
+    t.index ["user_id"], name: "index_country_rules_on_user_id"
   end
 
-  add_index "services", ["o_id"], name: "index_services_on_o_id"
+  create_table "users", force: :cascade do |t|
+    t.string "email", null: false
+    t.string "password_digest"
+    t.string "first_name"
+    t.string "last_name"
+    t.string "home_country_code"
+    t.string "timezone", default: "UTC"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["email"], name: "index_users_on_email", unique: true
+  end
 
+  create_table "visits", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "country_id", null: false
+    t.date "start_date", null: false
+    t.date "end_date", null: false
+    t.text "notes"
+    t.string "purpose"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["country_id"], name: "index_visits_on_country_id"
+    t.index ["user_id", "start_date", "end_date"], name: "index_visits_on_user_id_and_start_date_and_end_date"
+    t.index ["user_id"], name: "index_visits_on_user_id"
+  end
+
+  add_foreign_key "country_rules", "countries"
+  add_foreign_key "country_rules", "users"
+  add_foreign_key "visits", "countries"
+  add_foreign_key "visits", "users"
 end

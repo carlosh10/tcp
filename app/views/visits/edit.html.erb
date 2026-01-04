@@ -1,0 +1,55 @@
+<div class="min-h-screen bg-gray-900 text-white p-4">
+  <div class="max-w-2xl mx-auto">
+    <div class="flex justify-between items-center mb-6">
+      <h1 class="text-2xl font-bold">Edit Visit</h1>
+      <%= link_to "← Back", dashboard_path, class: "text-blue-400 hover:underline" %>
+    </div>
+
+    <div class="bg-gray-800 rounded-lg p-6">
+      <%= form_with model: @visit, url: visit_path(@visit), method: :patch, class: "space-y-6" do |f| %>
+        <% if @visit.errors.any? %>
+          <div class="bg-red-900 border border-red-700 rounded-lg p-4">
+            <p class="font-semibold"><%= pluralize(@visit.errors.count, "error") %> prohibited this visit from being saved:</p>
+            <ul class="list-disc list-inside mt-2">
+              <% @visit.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+              <% end %>
+            </ul>
+          </div>
+        <% end %>
+
+        <div>
+          <%= f.label :country_id, "Country", class: "block text-sm font-medium mb-2" %>
+          <%= f.collection_select :country_id, @countries, :id, :name, {}, { class: "w-full px-4 py-2 bg-gray-700 rounded-lg border border-gray-600 focus:border-blue-500 focus:outline-none" } %>
+        </div>
+
+        <div class="grid grid-cols-2 gap-4">
+          <div>
+            <%= f.label :start_date, class: "block text-sm font-medium mb-2" %>
+            <%= f.date_field :start_date, class: "w-full px-4 py-2 bg-gray-700 rounded-lg border border-gray-600 focus:border-blue-500 focus:outline-none" %>
+          </div>
+
+          <div>
+            <%= f.label :end_date, class: "block text-sm font-medium mb-2" %>
+            <%= f.date_field :end_date, class: "w-full px-4 py-2 bg-gray-700 rounded-lg border border-gray-600 focus:border-blue-500 focus:outline-none" %>
+          </div>
+        </div>
+
+        <div>
+          <%= f.label :purpose, class: "block text-sm font-medium mb-2" %>
+          <%= f.select :purpose, options_for_select(['Tourism', 'Work', 'Study', 'Family', 'Transit'], @visit.purpose), { prompt: "Select purpose" }, { class: "w-full px-4 py-2 bg-gray-700 rounded-lg border border-gray-600 focus:border-blue-500 focus:outline-none" } %>
+        </div>
+
+        <div>
+          <%= f.label :notes, class: "block text-sm font-medium mb-2" %>
+          <%= f.text_area :notes, rows: 4, class: "w-full px-4 py-2 bg-gray-700 rounded-lg border border-gray-600 focus:border-blue-500 focus:outline-none", placeholder: "Optional notes about your visit..." %>
+        </div>
+
+        <div class="flex gap-4">
+          <%= f.submit "Update Visit", class: "flex-1 bg-blue-600 hover:bg-blue-700 py-2 rounded-lg font-semibold cursor-pointer" %>
+          <%= link_to "Cancel", dashboard_path, class: "flex-1 bg-gray-700 hover:bg-gray-600 py-2 rounded-lg font-semibold text-center" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
